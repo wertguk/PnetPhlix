@@ -8,40 +8,50 @@ Movie::Movie(const string& id, const string& title, const string& release_year,
              const vector<string>& directors, const vector<string>& actors,
              const vector<string>& genres, float rating)
 {
-    // Replace this line with correct code.
+    m_id = id;
+    m_title = title;
+    m_year = release_year;
+    m_rating = rating;
+    vector<string>::const_iterator it;
+    for (it = directors.begin(); it != directors.end(); it++)
+        m_directors.push_back(*it);
+    for (it = actors.begin(); it != actors.end(); it++)
+        m_actors.push_back(*it);
+    for (it = genres.begin(); it != genres.end(); it++)
+        m_genres.push_back(*it);
 }
 
 string Movie::get_id() const
 {
-    return "DUMMY";  // Replace this line with correct code.
+    return m_id;
 }
 
 string Movie::get_title() const
 {
-    return "DUMMY";  // Replace this line with correct code.
+    return m_title;
 }
 
 string Movie::get_release_year() const
 {
-    return "DUMMY";  // Replace this line with correct code.
+    return m_year;
 }
 
 float Movie::get_rating() const
 {
-    return -999;  // Replace this line with correct code.
+    return m_rating;
 }
 
 vector<string> Movie::get_directors() const
 {
-    return vector<string>();  // Replace this line with correct code.
+    return m_directors;
 }
 
 vector<string> Movie::get_actors() const
 {
-    return vector<string>();  // Replace this line with correct code.
+    return m_actors;
 }
 
 vector<string> Movie::get_genres() const
 {
-    return vector<string>();  // Replace this line with correct code.
+    return m_genres;
 }
