@@ -2,6 +2,8 @@
 #define USERDATABASE_INCLUDED
 
 #include <string>
+#include <iostream>
+#include <fstream>
 
 class User;
 

@@ -1,6 +1,8 @@
 #ifndef TREEMULTIMAP_INCLUDED
 #define TREEMULTIMAP_INCLUDED
 
+#include <list>
+
 template <typename KeyType, typename ValueType>
 class TreeMultimap
 {
@@ -33,17 +35,17 @@ class TreeMultimap
 
     TreeMultimap()
     {
-        // Replace this line with correct code.
+        root = nullptr;
     }
 
     ~TreeMultimap()
     {
-        // Replace this line with correct code.
+        deleteTree(root);
     }
 
     void insert(const KeyType& key, const ValueType& value)
     {
-        // Replace this line with correct code.
+        insertInOrder(root, key, value);
     }
 
     Iterator find(const KeyType& key) const
@@ -52,6 +54,27 @@ class TreeMultimap
     }
 
   private:
+    Node* root;
+    void deleteTree(Node* p);
+    void insertInOrder(Node* p, KeyType key, ValueType value);
 };
+
+template <typename KeyType, typename ValueType>
+struct Node
+{
+    Node* left;
+    Node* right;
+    std::list<ValueType> values;
+    KeyType key;
+};
+
+void TreeMultimap::deleteTree(Node* p){
+    if (p == nullptr)
+        return
+    deleteTree(p->left);
+    deleteTree(p->right);
+    delete p;
+}
+
 
 #endif // TREEMULTIMAP_INCLUDED
