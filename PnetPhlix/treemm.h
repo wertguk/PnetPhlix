@@ -12,25 +12,33 @@ class TreeMultimap
       public:
         Iterator()
         {
-            // Replace this line with correct code.
+            m_it = m_list.begin();
+        }
+        
+        Iterator(typename std::list<ValueType>::iterator it, std::list<ValueType> nlist)
+        {
+            m_it = it;
+            m_list = nlist;
         }
 
         ValueType& get_value() const
         {
-            throw 1;  // Replace this line with correct code.
+            return *m_it;
         }
 
         bool is_valid() const
         {
-            return false;  // Replace this line with correct code.
+            return !(m_it == m_list.end());
         }
 
         void advance()
         {
-            // Replace this line with correct code.
+            m_it++;
         }
 
       private:
+        typename std::list<ValueType>::iterator m_it;
+        std::list<ValueType> m_list;
     };
 
     TreeMultimap()
@@ -50,7 +58,7 @@ class TreeMultimap
 
     Iterator find(const KeyType& key) const
     {
-        return Iterator();  // Replace this line with correct code.
+        return findKey(root, key).begin();
     }
 
   private:
@@ -108,9 +116,21 @@ class TreeMultimap
         }
         p->values.push_back(value);
     }
+    
+    Iterator findKey(Node* p, KeyType key){
+        if (p == nullptr){
+            std::list<ValueType> emptyList;
+            return Iterator(emptyList.begin(), emptyList);
+        }
+        if (p->key == key)
+            return Iterator(p->values.begin(), p->values);
+        if (p->key < key)
+            findKey(p->left, key);
+        if (p->key > key)
+            findKey(p->right, key);
+        std::list<ValueType> emptyList;
+        return Iterator(emptyList.begin(), emptyList);
+    }
 };
-
-
-
 
 #endif // TREEMULTIMAP_INCLUDED
