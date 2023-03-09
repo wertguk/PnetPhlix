@@ -54,27 +54,63 @@ class TreeMultimap
     }
 
   private:
+    struct Node
+    {
+        Node* left;
+        Node* right;
+        std::list<ValueType> values;
+        KeyType key;
+    };
+    
     Node* root;
-    void deleteTree(Node* p);
-    void insertInOrder(Node* p, KeyType key, ValueType value);
+    
+    void deleteTree(Node* p){
+        if (p == nullptr)
+            return
+        deleteTree(p->left);
+        deleteTree(p->right);
+        delete p;
+    }
+
+    void insertInOrder(Node* p, KeyType key, ValueType value){
+        if (p == nullptr){
+            Node* np = new Node;
+            root = np;
+            root->key = key;
+            root->values.push_back(value);
+            root->left = nullptr;
+            root->right = nullptr;
+            return;
+        }
+        if (key < p->key){
+            if (p->left == nullptr){
+                Node* np = new Node;
+                p->left = np;
+                np->key = key;
+                np->values.push_back(value);
+                np->left = nullptr;
+                np->right = nullptr;
+                return;
+            }
+            insertInOrder(p->left, key, value);
+        }
+        if (key > p->key){
+            if (p->right == nullptr){
+                Node* np = new Node;
+                p->right = np;
+                np->key = key;
+                np->values.push_back(value);
+                np->left = nullptr;
+                np->right = nullptr;
+                return;
+            }
+            insertInOrder(p->right, key, value);
+        }
+        p->values.push_back(value);
+    }
 };
 
-template <typename KeyType, typename ValueType>
-struct Node
-{
-    Node* left;
-    Node* right;
-    std::list<ValueType> values;
-    KeyType key;
-};
 
-void TreeMultimap::deleteTree(Node* p){
-    if (p == nullptr)
-        return
-    deleteTree(p->left);
-    deleteTree(p->right);
-    delete p;
-}
 
 
 #endif // TREEMULTIMAP_INCLUDED
