@@ -74,7 +74,7 @@ class TreeMultimap
     
     void deleteTree(Node* p){
         if (p == nullptr)
-            return
+            return;
         deleteTree(p->left);
         deleteTree(p->right);
         delete p;
