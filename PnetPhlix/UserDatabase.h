@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include "User.h"
+#include "treemm.h"
 
 class User;
 
@@ -16,6 +17,8 @@ class UserDatabase
     User* get_user_from_email(const std::string& email) const;
 
   private:
+    TreeMultimap<std::string, std::string> tmm;
+    bool m_called;
 };
 
 #endif // USERDATABASE_INCLUDED

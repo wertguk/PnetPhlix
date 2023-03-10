@@ -7,12 +7,15 @@ using namespace std;
 
 UserDatabase::UserDatabase()
 {
-    // Replace this line with correct code.
+    m_called = false;
 }
 
 bool UserDatabase::load(const string& filename)
 {
-    return false;  // Replace this line with correct code.
+    ifstream infile(filename);
+    if (!infile)
+        return false;
+    return true;
 }
 
 User* UserDatabase::get_user_from_email(const string& email) const
