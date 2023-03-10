@@ -58,7 +58,7 @@ class TreeMultimap
 
     Iterator find(const KeyType& key) const
     {
-        return findKey(root, key).begin();
+        return findKey(root, key);
     }
 
   private:
@@ -117,7 +117,7 @@ class TreeMultimap
         p->values.push_back(value);
     }
     
-    Iterator findKey(Node* p, KeyType key){
+    Iterator findKey(Node* p, KeyType key) const{
         if (p == nullptr){
             std::list<ValueType> emptyList;
             return Iterator(emptyList.begin(), emptyList);

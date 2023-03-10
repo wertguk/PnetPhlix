@@ -40,5 +40,5 @@ bool UserDatabase::load(const string& filename)
 
 User* UserDatabase::get_user_from_email(const string& email) const
 {
-    return nullptr;  // Replace this line with correct code.
+    return &tmm.find(email).get_value();
 }
