@@ -122,8 +122,10 @@ class TreeMultimap
             std::list<ValueType> emptyList;
             return Iterator(emptyList.begin(), emptyList);
         }
-        if (p->key == key)
-            return Iterator(p->values.begin(), p->values);
+        if (p->key == key){
+            Iterator it = Iterator(p->values.begin(), p->values);
+            return it;
+        }
         if (p->key < key)
             findKey(p->left, key);
         if (p->key > key)

@@ -17,16 +17,19 @@ bool UserDatabase::load(const string& filename)
         return false;
     string s, name, email;
     int i;
+    int k = 0;
     while (getline(infile, s)){
+        if (k > 0)
+            getline(infile, s);
         int num;
         vector<string> movies;
-        if (s == "")
-            getline(infile, s);
         name = s;
         getline(infile, s);
         email = s;
         infile >> i;
+        infile.ignore(10000, '\n');
         num = i;
+        k++;
         for (int j = 0; j < i; j++){
             getline(infile, s);
             movies.push_back(s);

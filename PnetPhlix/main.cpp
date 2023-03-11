@@ -2,6 +2,7 @@
 #include "User.h"
 #include <iostream>
 #include <string>
+#include <cassert>
 using namespace std;
 
 //////////////////////////i/////////////////////////////////////////////////////
@@ -22,13 +23,13 @@ using namespace std;
   // data files to makde debuggiing easier, so you can replace the string
   // literals with the names of those smaller files.
 
-const string USER_DATAFILE  = "users.txt";
-const string MOVIE_DATAFILE = "movies.txt";
+const string USER_DATAFILE  = "/Users/heran/Desktop/PnetPhlix/PnetPhlix/users.txt";
+const string MOVIE_DATAFILE = "/Users/heran/Desktop/PnetPhlix/PnetPhlix/movies.txt";
 
 int main()
 {
 	UserDatabase udb;
-	if (0&&!udb.load(USER_DATAFILE))  // In skeleton, load always return false
+	if (!udb.load(USER_DATAFILE))  // In skeleton, load always return false
 	{
 		cout << "Failed to load user data file " << USER_DATAFILE << "!" << endl;
 		return 1;
