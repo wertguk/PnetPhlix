@@ -43,5 +43,7 @@ bool UserDatabase::load(const string& filename)
 
 User* UserDatabase::get_user_from_email(const string& email) const
 {
+    if (!tmm.find(email).is_valid())
+        return nullptr;
     return &tmm.find(email).get_value();
 }

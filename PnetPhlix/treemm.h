@@ -2,6 +2,7 @@
 #define TREEMULTIMAP_INCLUDED
 
 #include <list>
+#include <iostream>
 
 template <typename KeyType, typename ValueType>
 class TreeMultimap
@@ -15,10 +16,10 @@ class TreeMultimap
             m_it = m_list.begin();
         }
         
-        Iterator(typename std::list<ValueType>::iterator it, std::list<ValueType> nlist)
+        Iterator(std::list<ValueType> nlist)
         {
-            m_it = it;
             m_list = nlist;
+            m_it = m_list.begin();
         }
 
         ValueType& get_value() const
@@ -119,19 +120,17 @@ class TreeMultimap
     
     Iterator findKey(Node* p, KeyType key) const{
         if (p == nullptr){
-            std::list<ValueType> emptyList;
-            return Iterator(emptyList.begin(), emptyList);
+            return Iterator();
         }
         if (p->key == key){
-            Iterator it = Iterator(p->values.begin(), p->values);
+            Iterator it = Iterator(p->values);
             return it;
         }
-        if (p->key < key)
-            findKey(p->left, key);
         if (p->key > key)
-            findKey(p->right, key);
-        std::list<ValueType> emptyList;
-        return Iterator(emptyList.begin(), emptyList);
+            return findKey(p->left, key);
+        if (p->key < key)
+            return findKey(p->right, key);
+        return Iterator();
     }
 };
 
