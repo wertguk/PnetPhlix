@@ -1,5 +1,7 @@
 #include "UserDatabase.h"
 #include "User.h"
+#include "MovieDatabase.h"
+#include "Movie.h"
 #include <iostream>
 #include <string>
 #include <cassert>
@@ -29,13 +31,20 @@ const string MOVIE_DATAFILE = "/Users/heran/Desktop/PnetPhlix/PnetPhlix/movies.t
 int main()
 {
 	UserDatabase udb;
+    MovieDatabase mdb;
 	if (!udb.load(USER_DATAFILE))  // In skeleton, load always return false
 	{
 		cout << "Failed to load user data file " << USER_DATAFILE << "!" << endl;
 		return 1;
 	}
+    if (!mdb.load(MOVIE_DATAFILE))
+    {
+        cout << "Failed to load movie data file " << MOVIE_DATAFILE << "!" << endl;
+        return 1;
+    }
 	for (;;)
 	{
+        /*
 		cout << "Enter user email address (or quit): ";
 		string email;
 		getline(cin, email);
@@ -46,5 +55,17 @@ int main()
 			cout << "No user in the database has that email address." << endl;
 		else
 			cout << "Found " << u->get_full_name() << endl;
+         */
+        cout << "Enter user movie ID (or quit): ";
+        string id;
+        getline(cin, id);
+        if (id == "quit")
+            return 0;
+        Movie* m = mdb.get_movie_from_id(id);
+        if (m == nullptr){
+            cout << "No movie in the database has that movie id." << endl;
+        }else{
+            cout << "Found " << m->get_title() << " " << m->get_directors()[0] << endl;
+        }
 	}
 }

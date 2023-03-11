@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 using namespace std;
 
 MovieDatabase::MovieDatabase()
@@ -23,48 +24,51 @@ bool MovieDatabase::load(const string& filename)
     while (getline(infile, s)){
         if (k > 0)
             getline(infile, s);
-        getline(infile, s);
+        k++;
         id = s;
         getline(infile, s);
         name = s;
         getline(infile, s);
         year = s;
         char c = ',';
-        string s = "";
+        s = "";
         vector<string> directors;
         while (c != '\n'){
             infile.get(c);
             if (c == ','){
-                s = "";
                 directors.push_back(s);
-            }else{
+                s = "";
+            }else if (c != '\n'){
                 s += c;
             }
         }
+        directors.push_back(s);
         c = ',';
         s = "";
         vector<string> actors;
         while (c != '\n'){
             infile.get(c);
             if (c == ','){
-                s = "";
                 actors.push_back(s);
-            }else{
+                s = "";
+            }else if (c != '\n'){
                 s += c;
             }
         }
+        actors.push_back(s);
         c = ',';
         s = "";
         vector<string> genres;
         while (c != '\n'){
             infile.get(c);
             if (c == ','){
-                s = "";
                 genres.push_back(s);
-            }else{
+                s = "";
+            }else if (c != '\n'){
                 s += c;
             }
         }
+        genres.push_back(s);
         infile >> rating;
         infile.ignore(10000, '\n');
         Movie* m = new Movie(id, name, year, directors, actors, genres, rating);
