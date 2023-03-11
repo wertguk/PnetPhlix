@@ -12,6 +12,8 @@ UserDatabase::UserDatabase()
 
 bool UserDatabase::load(const string& filename)
 {
+    if (m_called)
+        return false;
     ifstream infile(filename);
     if (!infile)
         return false;
@@ -21,14 +23,12 @@ bool UserDatabase::load(const string& filename)
     while (getline(infile, s)){
         if (k > 0)
             getline(infile, s);
-        int num;
         vector<string> movies;
         name = s;
         getline(infile, s);
         email = s;
         infile >> i;
         infile.ignore(10000, '\n');
-        num = i;
         k++;
         for (int j = 0; j < i; j++){
             getline(infile, s);
