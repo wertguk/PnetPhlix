@@ -67,7 +67,7 @@ bool MovieDatabase::load(const string& filename)
         }
         infile >> rating;
         infile.ignore(10000, '\n');
-        Movie m = Movie(id, name, year, directors, actors, genres, rating);
+        Movie* m = new Movie(id, name, year, directors, actors, genres, rating);
         tmm_movie.insert(id, m);
         for (int i = 0; i < directors.size(); i++)
             tmm_director.insert(directors[i], m);
@@ -76,25 +76,46 @@ bool MovieDatabase::load(const string& filename)
         for (int i = 0; i < genres.size(); i++)
             tmm_genre.insert(genres[i], m);
     }
-    return true;  // Replace this line with correct code.
+    m_called = true;
+    return true;
 }
 
 Movie* MovieDatabase::get_movie_from_id(const string& id) const
 {
-    return nullptr;  // Replace this line with correct code.
+    if (!tmm_movie.find(id).is_valid())
+        return nullptr;
+    return tmm_movie.find(id).get_value();
 }
 
 vector<Movie*> MovieDatabase::get_movies_with_director(const string& director) const
 {
-    return vector<Movie*>();  // Replace this line with correct code.
+    vector<Movie*> movies;
+    TreeMultimap<string, Movie*>::Iterator it = tmm_director.find(director);
+    while (it.is_valid()){
+        movies.push_back(it.get_value());
+        it.advance();
+    }
+    return movies;
 }
 
 vector<Movie*> MovieDatabase::get_movies_with_actor(const string& actor) const
 {
-    return vector<Movie*>();  // Replace this line with correct code.
+    vector<Movie*> movies;
+    TreeMultimap<string, Movie*>::Iterator it = tmm_actor.find(actor);
+    while (it.is_valid()){
+        movies.push_back(it.get_value());
+        it.advance();
+    }
+    return movies;
 }
 
 vector<Movie*> MovieDatabase::get_movies_with_genre(const string& genre) const
 {
-    return vector<Movie*>();  // Replace this line with correct code.
+    vector<Movie*> movies;
+    TreeMultimap<string, Movie*>::Iterator it = tmm_genre.find(genre);
+    while (it.is_valid()){
+        movies.push_back(it.get_value());
+        it.advance();
+    }
+    return movies;
 }

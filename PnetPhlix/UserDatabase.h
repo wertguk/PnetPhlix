@@ -16,7 +16,7 @@ class UserDatabase
     User* get_user_from_email(const std::string& email) const;
 
   private:
-    TreeMultimap<std::string, User> tmm;
+    TreeMultimap<std::string, User*> tmm;
     bool m_called;
 };
 

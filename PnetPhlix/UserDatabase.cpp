@@ -34,7 +34,7 @@ bool UserDatabase::load(const string& filename)
             getline(infile, s);
             movies.push_back(s);
         }
-        User u = User(name, email, movies);
+        User* u = new User(name, email, movies);
         tmm.insert(email, u);
     }
     m_called = true;
@@ -45,5 +45,5 @@ User* UserDatabase::get_user_from_email(const string& email) const
 {
     if (!tmm.find(email).is_valid())
         return nullptr;
-    return &tmm.find(email).get_value();
+    return tmm.find(email).get_value();
 }
