@@ -2,6 +2,8 @@
 #include "User.h"
 #include "MovieDatabase.h"
 #include "Movie.h"
+#include "Recommender.h"
+#include "Recommender.cpp"
 #include <iostream>
 #include <string>
 #include <cassert>
@@ -44,7 +46,7 @@ int main()
     }
 	for (;;)
 	{
-        /*
+        
 		cout << "Enter user email address (or quit): ";
 		string email;
 		getline(cin, email);
@@ -57,8 +59,8 @@ int main()
             for (int i = 0; i < u->get_watch_history().size(); i++)
                 cout << u->get_watch_history()[i] << endl;
         }
-         */
-        
+         
+        /*
         cout << "Enter actor (or quit): ";
         string id;
         getline(cin, id);
@@ -72,7 +74,7 @@ int main()
             for (int i = 0; i < m.size(); i++)
                 cout << m[i]->get_title() << endl;
         }
-         
+         */
         /*
         cout << "Enter movie ID (or quit): ";
         string id;

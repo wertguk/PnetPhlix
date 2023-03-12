@@ -3,16 +3,14 @@
 
 #include <string>
 #include <vector>
-
-class UserDatabase;
-class MovieDatabase;
+#include "UserDatabase.h"
+#include "MovieDatabase.h"
 
 struct MovieAndRank
 {
     MovieAndRank(const std::string& id, int score)
      : movie_id(id), compatibility_score(score)
     {}
-
     std::string movie_id;
     int compatibility_score;
 };
@@ -26,6 +24,8 @@ class Recommender
                                                int movie_count) const;
 
   private:
+    MovieDatabase m_mdb;
+    UserDatabase m_udb;
 };
 
 #endif // RECOMMENDER_INCLUDED
