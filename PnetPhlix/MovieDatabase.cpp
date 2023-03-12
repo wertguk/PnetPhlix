@@ -78,8 +78,9 @@ bool MovieDatabase::load(const string& filename)
         tmm_movie.insert(id, m);
         for (int i = 0; i < directors.size(); i++)
             tmm_director.insert(directors[i], m);
-        for (int i = 0; i < actors.size(); i++)
+        for (int i = 0; i < actors.size(); i++){
             tmm_actor.insert(actors[i], m);
+        }
         for (int i = 0; i < genres.size(); i++)
             tmm_genre.insert(genres[i], m);
     }

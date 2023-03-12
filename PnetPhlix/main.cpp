@@ -51,11 +51,14 @@ int main()
 		if (email == "quit")
 			return 0;
 		User* u = udb.get_user_from_email(email);
-		if (u == nullptr)
+        if (u == nullptr){
 			cout << "No user in the database has that email address." << endl;
-		else
-			cout << "Found " << u->get_full_name() << endl;
+        }else{
+            for (int i = 0; i < u->get_watch_history().size(); i++)
+                cout << u->get_watch_history()[i] << endl;
+        }
          */
+        
         cout << "Enter actor (or quit): ";
         string id;
         getline(cin, id);
@@ -69,5 +72,20 @@ int main()
             for (int i = 0; i < m.size(); i++)
                 cout << m[i]->get_title() << endl;
         }
+         
+        /*
+        cout << "Enter movie ID (or quit): ";
+        string id;
+        getline(cin, id);
+        if (id == "quit")
+            return 0;
+        Movie* m = mdb.get_movie_from_id(id);
+        if (m == nullptr){
+            cout << "No movie in the database has that actor." << endl;
+        }else{
+            for (int i = 0; i < m->get_actors().size(); i++)
+                cout << m->get_actors()[i] << endl;
+        }
+         */
 	}
 }

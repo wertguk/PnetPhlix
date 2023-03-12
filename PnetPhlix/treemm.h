@@ -115,7 +115,8 @@ class TreeMultimap
             }
             insertInOrder(p->right, key, value);
         }
-        p->values.push_back(value);
+        if (key == p->key)
+            p->values.push_back(value);
     }
     
     Iterator findKey(Node* p, KeyType key) const{
