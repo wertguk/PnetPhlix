@@ -3,7 +3,6 @@
 #include "MovieDatabase.h"
 #include "Movie.h"
 #include "Recommender.h"
-#include "Recommender.cpp"
 #include <iostream>
 #include <string>
 #include <cassert>
@@ -29,6 +28,21 @@ using namespace std;
 
 const string USER_DATAFILE  = "/Users/heran/Desktop/PnetPhlix/PnetPhlix/users.txt";
 const string MOVIE_DATAFILE = "/Users/heran/Desktop/PnetPhlix/PnetPhlix/movies.txt";
+
+void findMatches(const Recommender& r, const MovieDatabase& md, const string& user_email, int num_recommendations) {
+    // get up to ten movie recommendations for the user
+    vector<MovieAndRank> recommendations = r.recommend_movies(user_email, 10);
+    if (recommendations.empty())
+       cout << "We found no movies to recommend :(.\n";
+    else {
+        for (int i = 0; i < recommendations.size(); i++) {
+            const MovieAndRank& mr = recommendations[i]; Movie* m = md.get_movie_from_id(mr.movie_id);
+            cout << i << ". " << m->get_title() << " ("
+                << m->get_release_year() << ")\n Rating: "
+            << m->get_rating() << "\n Compatibility Score: " << mr.compatibility_score << "\n";
+        }
+    }
+}
 
 int main()
 {
@@ -56,8 +70,7 @@ int main()
         if (u == nullptr){
 			cout << "No user in the database has that email address." << endl;
         }else{
-            for (int i = 0; i < u->get_watch_history().size(); i++)
-                cout << u->get_watch_history()[i] << endl;
+            cout << "Found " << u->get_full_name() << endl;
         }
          
         /*
