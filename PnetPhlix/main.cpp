@@ -56,16 +56,18 @@ int main()
 		else
 			cout << "Found " << u->get_full_name() << endl;
          */
-        cout << "Enter user movie ID (or quit): ";
+        cout << "Enter actor (or quit): ";
         string id;
         getline(cin, id);
         if (id == "quit")
             return 0;
-        Movie* m = mdb.get_movie_from_id(id);
-        if (m == nullptr){
-            cout << "No movie in the database has that movie id." << endl;
+        vector<Movie*> m = mdb.get_movies_with_actor(id);
+        if (m.empty()){
+            cout << "No movie in the database has that actor." << endl;
         }else{
-            cout << "Found " << m->get_title() << " " << m->get_directors()[0] << endl;
+            cout << "Acted in:\n";
+            for (int i = 0; i < m.size(); i++)
+                cout << m[i]->get_title() << endl;
         }
 	}
 }
