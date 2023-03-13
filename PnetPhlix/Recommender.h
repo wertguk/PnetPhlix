@@ -27,14 +27,6 @@ class Recommender
   private:
     const MovieDatabase* m_mdb;
     const UserDatabase* m_udb;
-    struct cmp {
-        bool operator()(const MovieAndRank& a, const MovieAndRank& b){
-            if (a.compatibility_score != b.compatibility_score)
-                return a.compatibility_score > b.compatibility_score;
-            else
-                return a.movie_id < b.movie_id;
-        }
-    };
 };
 
 #endif // RECOMMENDER_INCLUDED
