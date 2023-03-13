@@ -31,7 +31,7 @@ const string MOVIE_DATAFILE = "/Users/heran/Desktop/PnetPhlix/PnetPhlix/movies.t
 
 void findMatches(const Recommender& r, const MovieDatabase& md, const string& user_email, int num_recommendations) {
     // get up to ten movie recommendations for the user
-    vector<MovieAndRank> recommendations = r.recommend_movies(user_email, 10);
+    vector<MovieAndRank> recommendations = r.recommend_movies(user_email, num_recommendations);
     if (recommendations.empty())
        cout << "We found no movies to recommend :(.\n";
     else {
@@ -71,9 +71,10 @@ int main()
         if (u == nullptr){
 			cout << "No user in the database has that email address." << endl;
         }else{
-            for (int i = 0; i < u->get_watch_history().size(); i++)
-                cout << mdb.get_movie_from_id(u->get_watch_history()[i])->get_title() << endl;
-            findMatches(rec, mdb, email, 8);
+            int num;
+            cout << "Enter number of recommendations: ";
+            cin >> num;
+            findMatches(rec, mdb, email, num);
         }
         /*
         cout << "Enter actor (or quit): ";

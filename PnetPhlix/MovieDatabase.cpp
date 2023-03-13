@@ -10,6 +10,12 @@ MovieDatabase::MovieDatabase()
     m_called = false;
 }
 
+MovieDatabase::~MovieDatabase()
+{
+    for (int i = 0; i < m_movies.size(); i++)
+        delete m_movies[i];
+}
+
 bool MovieDatabase::load(const string& filename)
 {
     if (m_called)
@@ -95,6 +101,7 @@ bool MovieDatabase::load(const string& filename)
         infile >> rating;
         infile.ignore(10000, '\n');
         Movie* m = new Movie(uid, uname, year, udirectors, uactors, ugenres, rating);
+        m_movies.push_back(m);
         tmm_movie.insert(id, m);
         for (int i = 0; i < directors.size(); i++)
             tmm_director.insert(directors[i], m);

@@ -10,6 +10,12 @@ UserDatabase::UserDatabase()
     m_called = false;
 }
 
+UserDatabase::~UserDatabase()
+{
+    for (int i = 0; i < m_users.size(); i++)
+        delete m_users[i];
+}
+
 bool UserDatabase::load(const string& filename)
 {
     if (m_called)
@@ -35,6 +41,7 @@ bool UserDatabase::load(const string& filename)
             movies.push_back(s);
         }
         User* u = new User(name, email, movies);
+        m_users.push_back(u);
         tmm.insert(email, u);
     }
     m_called = true;

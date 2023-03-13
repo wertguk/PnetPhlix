@@ -21,7 +21,6 @@ vector<MovieAndRank> Recommender::recommend_movies(const string& user_email, int
 {
     vector<string> user_movies = m_udb->get_user_from_email(user_email)->get_watch_history();
     unordered_map<Movie*, int> ratings;
-    unordered_map<string, string> movieNames;
     for (int i = 0; i < user_movies.size(); i++){
         Movie* m = m_mdb->get_movie_from_id(user_movies[i]);
         vector<string> directors = m->get_directors();
@@ -29,7 +28,6 @@ vector<MovieAndRank> Recommender::recommend_movies(const string& user_email, int
             vector<Movie*> dMovies = m_mdb->get_movies_with_director(directors[j]);
             for (int k = 0; k < dMovies.size(); k++){
                 ratings[dMovies[k]] += 20;
-                movieNames[dMovies[k]->get_id()] = dMovies[k]->get_title();
             }
         }
         vector<string> actors = m->get_actors();
@@ -37,7 +35,6 @@ vector<MovieAndRank> Recommender::recommend_movies(const string& user_email, int
             vector<Movie*> aMovies = m_mdb->get_movies_with_actor(actors[j]);
             for (int k = 0; k < aMovies.size(); k++){
                 ratings[aMovies[k]] += 30;
-                movieNames[aMovies[k]->get_id()] = aMovies[k]->get_title();
             }
         }
         vector<string> genres = m->get_genres();
@@ -45,7 +42,6 @@ vector<MovieAndRank> Recommender::recommend_movies(const string& user_email, int
             vector<Movie*> gMovies = m_mdb->get_movies_with_genre(genres[j]);
             for (int k = 0; k < gMovies.size(); k++){
                 ratings[gMovies[k]] += 1;
-                movieNames[gMovies[k]->get_id()] = gMovies[k]->get_title();
             }
         }
     }
@@ -54,11 +50,11 @@ vector<MovieAndRank> Recommender::recommend_movies(const string& user_email, int
         MovieAndRank movierank = MovieAndRank(it->first->get_id(), it->second);
         recommendations.push_back(movierank);
     }
-    sort(recommendations.begin(), recommendations.end(), [this, movieNames] (const MovieAndRank& a, const MovieAndRank& b){
+    sort(recommendations.begin(), recommendations.end(), [this] (const MovieAndRank& a, const MovieAndRank& b){
             if (a.compatibility_score != b.compatibility_score)
                 return a.compatibility_score > b.compatibility_score;
             else
-                return movieNames.at(a.movie_id) < movieNames.at(b.movie_id);
+                return m_mdb->get_movie_from_id(a.movie_id)->get_title() < m_mdb->get_movie_from_id(b.movie_id)->get_title();
         }
     );
     vector<MovieAndRank> result;
