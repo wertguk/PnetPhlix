@@ -58,6 +58,7 @@ int main()
         cout << "Failed to load movie data file " << MOVIE_DATAFILE << "!" << endl;
         return 1;
     }
+    Recommender rec = Recommender(udb, mdb);
 	for (;;)
 	{
         
@@ -70,9 +71,10 @@ int main()
         if (u == nullptr){
 			cout << "No user in the database has that email address." << endl;
         }else{
-            cout << "Found " << u->get_full_name() << endl;
+            for (int i = 0; i < u->get_watch_history().size(); i++)
+                cout << mdb.get_movie_from_id(u->get_watch_history()[i])->get_title() << endl;
+            findMatches(rec, mdb, email, 8);
         }
-         
         /*
         cout << "Enter actor (or quit): ";
         string id;

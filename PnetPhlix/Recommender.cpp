@@ -50,9 +50,22 @@ vector<MovieAndRank> Recommender::recommend_movies(const string& user_email, int
         MovieAndRank movierank = MovieAndRank(it->first->get_id(), it->second);
         recommendations.push_back(movierank);
     }
-    make_heap(recommendations.begin(), recommendations.end(), cmp());
+    sort(recommendations.begin(), recommendations.end(), cmp());
     vector<MovieAndRank> result;
-    for (int i = 0; i < movie_count; i++)
-        result.push_back(recommendations[i]);
+    int inserted = 0;
+    int i = 0;
+    while (inserted < movie_count){
+        bool watched = false;
+        for (int j = 0; j < user_movies.size(); j++){
+            if (recommendations[i].movie_id == user_movies[j]){
+                watched = true;
+            }
+        }
+        if (!watched){
+            result.push_back(recommendations[i]);
+            inserted++;
+        }
+        i++;
+    }
     return result;  // Replace this line with correct code.
 }

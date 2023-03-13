@@ -17,7 +17,7 @@ bool MovieDatabase::load(const string& filename)
     ifstream infile(filename);
     if (!infile)
         return false;
-    string id, name, year, s;
+    string id, uid, name, uname, year, s;
     float rating;
     int k = 0;
     while (getline(infile, s)){
@@ -25,62 +25,81 @@ bool MovieDatabase::load(const string& filename)
             getline(infile, s);
         k++;
         id = s;
+        uid = s;
         for (int i = 0; i < id.size(); i++)
             id[i] = tolower(id[i]);
         getline(infile, s);
         name = s;
+        uname = s;
         for (int i = 0; i < name.size(); i++)
             name[i] = tolower(name[i]);
         getline(infile, s);
         year = s;
         char c = ',';
         s = "";
+        string us = "";
         vector<string> directors;
+        vector<string> udirectors;
         while (c != '\n'){
             infile.get(c);
             if (c == ','){
                 directors.push_back(s);
+                udirectors.push_back(us);
                 s = "";
+                us = "";
             }else if (c != '\n'){
+                us += c;
                 s += tolower(c);
             }
         }
         directors.push_back(s);
+        udirectors.push_back(us);
         c = ',';
         s = "";
+        us = "";
         vector<string> actors;
+        vector<string> uactors;
         while (c != '\n'){
             infile.get(c);
             if (c == ','){
                 actors.push_back(s);
+                uactors.push_back(us);
                 s = "";
+                us = "";
             }else if (c != '\n'){
+                us += c;
                 s += tolower(c);
             }
         }
         actors.push_back(s);
+        uactors.push_back(us);
         c = ',';
         s = "";
+        us = "";
         vector<string> genres;
+        vector<string> ugenres;
         while (c != '\n'){
             infile.get(c);
             if (c == ','){
                 genres.push_back(s);
+                ugenres.push_back(us);
                 s = "";
+                us = "";
             }else if (c != '\n'){
+                us += c;
                 s += tolower(c);
             }
         }
         genres.push_back(s);
+        ugenres.push_back(us);
         infile >> rating;
         infile.ignore(10000, '\n');
-        Movie* m = new Movie(id, name, year, directors, actors, genres, rating);
+        Movie* m = new Movie(uid, uname, year, udirectors, uactors, ugenres, rating);
         tmm_movie.insert(id, m);
         for (int i = 0; i < directors.size(); i++)
             tmm_director.insert(directors[i], m);
-        for (int i = 0; i < actors.size(); i++){
+        for (int i = 0; i < actors.size(); i++)
             tmm_actor.insert(actors[i], m);
-        }
         for (int i = 0; i < genres.size(); i++)
             tmm_genre.insert(genres[i], m);
     }
