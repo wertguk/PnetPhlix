@@ -18,8 +18,8 @@ class UserDatabase
     User* get_user_from_email(const std::string& email) const;
 
   private:
-    TreeMultimap<std::string, User*> tmm;
-    std::vector<User*> m_users;
+    TreeMultimap<std::string, User*> tmm;   //store users in tree
+    std::vector<User*> m_users; //store users to delete later
     bool m_called;
 };
 

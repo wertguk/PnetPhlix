@@ -22,11 +22,11 @@ class MovieDatabase
     std::vector<Movie*> get_movies_with_genre(const std::string& genre) const;
 
   private:
-    TreeMultimap<std::string, Movie*> tmm_movie;
+    TreeMultimap<std::string, Movie*> tmm_movie;    //store movies in tree to search
     TreeMultimap<std::string, Movie*> tmm_director;
     TreeMultimap<std::string, Movie*> tmm_actor;
     TreeMultimap<std::string, Movie*> tmm_genre;
-    std::vector<Movie*> m_movies;
+    std::vector<Movie*> m_movies;   //store movies to delete later
     bool m_called;
 };
 
